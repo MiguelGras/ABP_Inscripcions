@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Proyecto RICK-DECKARD21</title>
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <script src="../js/login.js"></script>
+</head>
+
+<body>
+
+    <body>
+        <div class="loginbox">
+            <img src="../img/icono.png" class="avatar">
+            <h1>ACCESO PERSONAL</h1>
+            <form action="../processes/login.proc.php" method="POST" onsubmit="validar(event)">
+                <div id="divmail">
+                    <p>Usuario</p>
+                    <div id="cajamail">
+                        <input type="text" name="email" id="email" placeholder="Introducir email">
+                        <div id="divmail">
+                        </div>
+                    </div>
+                    <div id="divpass">
+                        <p>Contraseña</p>
+                        <div id="cajapass">
+                            <input type="password" name="pass" id="pass" placeholder="Introducir contraseña">
+                        </div>
+                    </div>
+                    <div class=alert id='mensaje1'></div>
+                    <br>
+                    <div class=alert id='mensaje2'></div>
+                    <br>
+
+                    <input type="submit" name="login" value="Login"></input>
+            </form>
+
+            </div>
+    </body>
+
+</html>

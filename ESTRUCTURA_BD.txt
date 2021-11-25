@@ -8,12 +8,12 @@ nombre_usu
 apellido_usu
 edad_usu
 email_usu
-pass_usu
-tipo_usu
+img_dni_usu
 
 
 
-2. tbl_participantes
+
+2. tbl_voluntarios
 
 id_par (Primary Key)
 dni_par (fk dni_usu )
@@ -26,6 +26,7 @@ evento_par (fk nombre_ev)
 id_ev (Primary Key)
 nombre_ev 
 desc_ev
+img_ev
 edad_ev
 max_participantes_ev
 horario_ev
@@ -34,5 +35,11 @@ telf_contacto_ev
 
 
 
-4. tbl_tipo_usu
-nombre_tipo_usu (Primary Key)
+4. tbl_admin
+
+id_admin
+nombre_admin
+apellido_admin 
+email_admin 
+pass_admin 
+
