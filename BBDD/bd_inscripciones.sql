@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-11-2021 a las 19:28:50
+-- Tiempo de generación: 25-11-2021 a las 18:17:16
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 7.4.24
 
@@ -20,14 +20,13 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bd_inscripciones`
 --
-
+CREATE DATABASE bd_inscripciones;
+USE bd_inscripciones;
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tbl_admin`
 --
-CREATE DATABASE bd_inscripciones;
-USE bd_inscripciones;
 
 CREATE TABLE `tbl_admin` (
   `id_admin` int(11) NOT NULL,
@@ -46,14 +45,23 @@ CREATE TABLE `tbl_admin` (
 CREATE TABLE `tbl_eventos` (
   `id_ev` int(11) NOT NULL,
   `nombre_ev` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `desc_ev` varchar(200) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `desc_ev` varchar(1000) COLLATE utf8mb4_spanish_ci NOT NULL,
   `img_ev` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
   `edad_ev` int(3) NOT NULL,
   `max_participantes_ev` int(6) NOT NULL,
-  `horario_ev` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `horario_ev` date NOT NULL,
   `direccion_ev` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
   `telf_contacto_ev` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tbl_eventos`
+--
+
+INSERT INTO `tbl_eventos` (`id_ev`, `nombre_ev`, `desc_ev`, `img_ev`, `edad_ev`, `max_participantes_ev`, `horario_ev`, `direccion_ev`, `telf_contacto_ev`) VALUES
+(1, 'Cursa dels Nassos', 'La Cursa dels Nassos es una carrera atlética de carácter popular, de 10 kilómetros de recorrido, que tiene lugar el 31 de diciembre de cada año (día de San Silvestre) en Barcelona, España. Empezó a disputarse en 1999 como San Silvestre Barcelonesa, hasta que en 2004 tomó la denominación actual.\\r\\nLa carrera está organizada por el Ayuntamiento de Barcelona, a través del Institut Barcelona Esports, y cuenta con la dirección técnica de la Agrupació Atlètica Catalunya.', '../img/25-11-21-cursa_nassos.png', 18, 10000, '2021-12-31', 'Calle de Selva de Mar', 932812841),
+(2, 'La Cursa El Corte Inglés', 'La Cursa El Corte Inglés, popularmente conocida como \"La Cursa\", es una carrera atlética de carácter popular que tiene lugar cada año, desde 1979, en un circuito urbano en las calles de Barcelona. Está organizada por la empresa El Corte Inglés, con el apoyo del Ayuntamiento de Barcelona.', '../img/25-11-21-cursa_corteingles.jpg', 6, 100000, '2022-04-03', 'Parque de la Ciudadela', 932701730),
+(3, 'Cursa de les Empreses', '!Ya tenemos fecha para la Cursa de les Empreses!\r\n\r\nEl 17 de diciembre de 2021 no dudes en participar con tus compañeros de trabajo en una prueba que te hará disfrutar de un recorrido llano y sin dificultad técnica.\r\n\r\nCompite por equipos de 2, 3 o 4 participantes de la misma empresa, o si eres más atrevido corre con traje de manera individual en la categoría executive!\r\n\r\n¡Una experiencia difícil de repetir y que hacen que la prueba se convierta en única!', '../img/25-11-21-cursa_empreses.jpg', 18, 35000, '2021-12-17', 'Plaza Europa', 931594040);
 
 -- --------------------------------------------------------
 
@@ -124,7 +132,7 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT de la tabla `tbl_eventos`
 --
 ALTER TABLE `tbl_eventos`
-  MODIFY `id_ev` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ev` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_voluntarios`

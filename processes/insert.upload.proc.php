@@ -1,6 +1,6 @@
 <?php
 include "../services/connection.php";
-$img_ev="../public/".date('h-i-s-j-m-y')."-".$_FILES['file']['name'];
+$img_ev="../img/".date('j-m-y')."-".$_FILES['file']['name'];
 $title=$_REQUEST['title'];
 $error=false;
 if(move_uploaded_file($_FILES['file']['tmp_name'],$img_ev)){

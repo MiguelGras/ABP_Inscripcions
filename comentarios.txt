@@ -1,0 +1,38 @@
+Tablas Base de Datos:
+
+
+1. tbl_usuarios
+
+dni_usu (Primary Key)
+nombre_usu
+apellido_usu
+edad_usu
+email_usu
+pass_usu
+tipo_usu
+
+
+
+2. tbl_participantes
+
+id (Primary Key)
+dni_par (fk dni_usu )
+evento_par (fk nombre_ev)
+
+
+
+3. tbl_eventos
+
+id (Primary Key)
+nombre_ev 
+desc_ev
+edad_ev
+max_participantes_ev
+horario_ev
+direccion_ev
+telf_contacto_ev
+
+
+
+4. tbl_tipo_usu
+nombre_tipo_usu (Primary Key)

@@ -12,9 +12,6 @@
     <center>
     <br><br>
     <form action="../processes/insert.upload.proc.php" method="post" enctype="multipart/form-data">
-        Titulo
-        <input class="form-control" type="text" name="title" id="" >
-        <br><br>
         Archivo
         <!--la etiqueta accept="image/*" nos permite aislar 
         para que solo se puedan subir imagenes con cierta extension-->
@@ -26,16 +23,14 @@
     <?php
         include "../services/connection.php";
 
-        $fotos=$pdo->prepare("SELECT title,path FROM posts");
+        $fotos=$pdo->prepare("SELECT img_ev FROM tbl_eventos");
         $fotos->execute();
         $listafotos=$fotos->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($listafotos as $foto) {
             echo "<table>";
-                echo "<th>{$foto['title']}</th>";
-                    echo "<tr>";
-                        echo "<img style='width:200px;height:200px;' src='{$foto['path']}'";
-                        //echo "<td>{$foto['title']}</td>";
+                    echo "<img style='width:200px;height:200px;' src='{$foto['img_ev']}'";
+                    echo "</br>";
                     echo "</tr>";
             echo "</table>";
         }
