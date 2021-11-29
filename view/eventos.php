@@ -38,8 +38,8 @@ include '../services/connection.php';
 </head>
 <body>
     <h1>Rellena el formulario con tus datos para participar en la carrera!!</h1>
-    <form action="eventos.php" method="POST">
-    <!--onsubmit="return false"-->
+    <form method="post">
+    <!--onsubmit="return false" -->
         <p>Nombre: <input type="text" name="nombre" id="nombre" placeholder="Introduce tu nombre..."></p>
         <br>
         <p>Apellido: <input type="text" name="apellido" id="apellido" placeholder="Introduce tu primer apellido..."></p>
@@ -51,13 +51,13 @@ include '../services/connection.php';
         <p>DNI: <input type="text" name="dni" id="dni" placeholder="Introduce tu DNI..."></p>
         <br>
         <p>Foto DNI: <input class="form-control" type="file" accept="image/*" name="fotodni" id="fotodni" width="100%"></p>
-        <input type="submit" class="btn btn-success" value="Enviar">
+        <input type="submit" class="btn btn-success" value="Enviar" name="Enviar">
     </form>
 </body>
 </html>
 <?php
+//$img_ev="../img/".date('j-m-y')."-".$_FILES['file'];
 //-----------------------------------------------------------------------------------------------
-
 if(isset($_POST['Enviar'])){
     //------------
     $nombre=$_POST['nombre'];
@@ -68,21 +68,18 @@ if(isset($_POST['Enviar'])){
     //$fotodni=$_POST['fotodni'];
     //------------
         //$insert=$pdo->prepare("INSERT INTO `tbl_usuarios`(`dni_usu`, `nombre_usu`, `apellido_usu`, `edad_usu`, `email_usu`, `img_dni_usu`) VALUES ({$dni},{$nombre},{$apellido},{$edad},{$email},{$fotodni});");
-        $insert=$pdo->prepare("INSERT INTO `tbl_usuarios`(`dni_usu`, `nombre_usu`, `apellido_usu`, `edad_usu`, `email_usu`) VALUES ({$dni},{$nombre},{$apellido},{$edad},{$email};");
-
+        $insert=$pdo->prepare("INSERT INTO tbl_usuarios (dni_usu, nombre_usu, apellido_usu, edad_usu, email_usu) VALUES ('{$dni}','{$nombre}','{$apellido}','{$edad}','{$email}');");
         try{
         $insert->execute();
             if (empty($insert)) {
                 echo 'mal';
             }else{
-                echo "bien";
-                //header("location:../view/eventos.php");
+                header("location:../view/eventos.php?id_ev={$_GET['id_ev']}");
             }
         }catch(PDOException $e){
             echo 'mal';
             echo  $e->GETMessage();
         }
-    }
-    
+}
 //------------
 ?>
