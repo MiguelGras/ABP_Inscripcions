@@ -19,16 +19,16 @@
         $select->execute();
         $listaEventos=$select->fetchAll(PDO::FETCH_ASSOC);
         //------------
-        foreach ($listaEventos as $evento) {
-            echo "<table>";
-                echo "<tr>";
-                    echo "<a href='formulario.php?id_ev={$evento['id_ev']}'><img style='width:200px;height:200px;' src='{$evento['img_ev']}'/></a>";
-                echo "</tr>";
-                echo "<br>";
-                echo "<tr>{$evento['nombre_ev']}</tr>";  
-                echo "<br>";
-                echo "<tr>x/{$evento['max_participantes_ev']} participantes</tr>";
-            echo "</table>";
+        foreach ($listaEventos as $evento) {            
+            echo "<div>";
+                echo "<a href='eventos.php?id_ev={$evento['id_ev']}'><img style='width:200px;height:200px;' src='{$evento['img_ev']}'/></a>";
+            echo "</div>";
+            echo "<br>";
+            echo "<div>{$evento['nombre_ev']}</div>";  
+            echo "<br>";
+            echo "<div>x/{$evento['capacidad_ev']} participantes</div>";
+            echo "<br>";
+            echo "<div>{$evento['fecha_ev']}</div>";
         }
     ?>
 </body>
