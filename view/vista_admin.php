@@ -8,6 +8,17 @@
     <title>Vista Admin</title>
 </head>
 <body>
+
+<?php
+session_start();
+
+
+if(!empty($_SESSION['email_admin'])){
+?>
+    <a class='btnlogout' href="../processes/logout.php">Log Out</a>
+    <br>
+    <marquee behavior="scroll" direction="right" scrolldelay="1">Bienvenido <?php echo $_SESSION['email_admin']; ?></marquee>
+    <br>
     <!--MUY IMPORTANTE: enctype="multipart/form-data" PARA LA SUBIDA DE FICHEROS !-->
     <center>
 
@@ -63,6 +74,9 @@
                 echo "</tr>";
         }
         echo "</table>";
+}else{
+    header("Location:../view/login.html");
+}
     ?>
 </body>
 </html>
