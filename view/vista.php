@@ -14,6 +14,8 @@
     <h1>Carreras para participar!</h1>
     <?php
     include "../services/connection.php";
+
+    
         //------------
         $select=$pdo->prepare("SELECT * FROM tbl_eventos");
         $select->execute();
