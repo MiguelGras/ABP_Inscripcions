@@ -5,6 +5,11 @@ include '../services/connection.php';
 //------------
     $id_ev=$_GET['id_ev'];
 //------------
+    $fechalimite=$pdo->prepare("SELECT fecha_ev FROM tbl_eventos WHERE id_ev={$id_ev}");
+    $fechalimite->execute();
+    $fechalim=$fechalimite->fetchAll(PDO::FETCH_ASSOC);
+    $fechahoy=date('Y-m-d');
+//------------
     $select=$pdo->prepare("SELECT * FROM tbl_eventos WHERE id_ev={$id_ev}");
     $select->execute();
     $listaEventos=$select->fetchAll(PDO::FETCH_ASSOC);
@@ -40,19 +45,27 @@ include '../services/connection.php';
     <h1>Rellena el formulario con tus datos para participar en la carrera!!</h1>
     <form method="post" enctype="multipart/form-data">
     <!--onsubmit="return false" -->
-        <p>Nombre: <input type="text" name="nombre" id="nombre" placeholder="Introduce tu nombre..."></p>
+        <p>Nombre: <input type="text" name="nombre" id="nombre" placeholder="Introduce tu nombre..." required></p>
         <br>
-        <p>Apellido: <input type="text" name="apellido" id="apellido" placeholder="Introduce tu primer apellido..."></p>
+        <p>Apellido: <input type="text" name="apellido" id="apellido" placeholder="Introduce tu primer apellido..." required></p>
         <br>
-        <p>Edad: <input type="number" name="edad" id="edad" placeholder="Introduce tu edad..."></p>
+        <p>Edad: <input type="number" min="1" max="99" name="edad" id="edad" placeholder="Introduce tu edad..." required></p>
         <br>
-        <p>Email: <input type="email" name="email" id="email" placeholder="Introduce tu mail..."></p>
+        <p>Email: <input type="email" name="email" id="email" placeholder="Introduce tu mail..." required></p>
         <br>
-        <p>DNI: <input type="text" minlength="9" maxlength="9" name="dni" id="dni" size="9" placeholder="Introduce tu DNI..."></p>
+        <p>DNI: <input type="text" minlength="9" maxlength="9" name="dni" id="dni" placeholder="Introduce tu DNI..." required></p>
         <br>
-        <p>Foto DNI: <input class="form-control" type="file" accept="image/*" name="file" id="" width="100%"></p>
-        <input type="submit" class="btn btn-success" value="Enviar" name="Enviar">
-        <input type="submit" class="btn btn-success" value="¿Has participado ya en algun evento?" name="partante">
+        <p>Foto DNI: <input class="form-control" type="file" accept="image/*" name="file" id="" width="100%" required></p>
+        <?php
+            foreach ($listaEventos as $evento) {
+                if($fechahoy > $evento['fecha_ev']){
+                    echo "<h4>No se puede insciribr en este evento</h4>";
+                }else{
+                    echo "<input type='submit' class='btn btn-success' value='Enviar' name='Enviar'>";
+                    echo "<a href='../processes/partante.php?id_ev={$evento['id_ev']}'>¿Has participado ya en algun evento previo?</a>";
+                }
+            }       
+        ?>
     </form>
 </body>
 </html>
@@ -67,9 +80,9 @@ if(isset($_POST['Enviar'])){
     $dni=$_POST['dni'];
     $img_ev="../img/dni/".date('j-m-y')."-".$_FILES['file']['name'];
     //------------
-    $compemail=$pdo->prepare("SELECT email_usu FROM tbl_usuarios WHERE email_usu='{$email}'");
-    $compemail->execute();
-    $listaEmails=$compemail->fetchAll(PDO::FETCH_ASSOC);
+    $compremail=$pdo->prepare("SELECT email_usu FROM tbl_usuarios WHERE email_usu='{$email}'");
+    $compremail->execute();
+    $listaEmails=$compremail->fetchAll(PDO::FETCH_ASSOC);
     //------------
     if (empty($listaEmails)) {
         if(move_uploaded_file($_FILES['file']['tmp_name'],$img_ev)){    
@@ -87,7 +100,7 @@ if(isset($_POST['Enviar'])){
             }
         }
     }else{
-        echo 'Ese email ya esta registrado';
+        echo '<h4>Ese email ya esta registrado</h4>';
     }
     //------------
     
