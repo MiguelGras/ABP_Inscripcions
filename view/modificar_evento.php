@@ -27,6 +27,12 @@
     <form action="../processes/modificar.php" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
+            <div class="col-sm-10">
+                <input type="hidden" class="form-control" id="id_ev" name="id_ev" size="50" value="<?php echo "$id_ev";?>">
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="control-label col-sm-2" for="nombre_ev">Nombre evento:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="nombre_ev" name="nombre_ev" size="50" value="<?php echo "$evento[nombre_ev]";?>">
@@ -43,9 +49,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="img_ev">Imagen evento:</label>
             <div class="col-sm-10">
-                <input type="file" class="form-control" id="img_ev" accept="image/*" name="file" value="<?php echo "$evento[img_ev]";?>">
-                <br>
-                <input type="text" class="form-control" id="img_ev" name="img_ev" value="<?php echo "$evento[img_ev]";?>">
+                <input type="file" class="form-control" id="img_ev" accept="image/*" name="file">
                 <br>
                 <?php echo "<td><img style='width:200px;height:200px;' src='{$evento['img_ev']}'</td>";?>
             </div>
@@ -88,7 +92,7 @@
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-info">Guardar</button>
+                <button type="submit" class="btn btn-info" name="guardar" >Guardar</button>
                 <a href='vista_admin.php' class='btn btn-danger'>Cancelar</a>
             </div>
         </div>

@@ -13,7 +13,7 @@ $error=false;
 if(move_uploaded_file($_FILES['file']['tmp_name'],$img_ev)){
  try {
     #Insertaré el registro
-    $stmt = $pdo->prepare("INSERT INTO tbl_eventos (nombre_ev, desc_ev, img_ev, edad_ev, max_participantes_ev, fecha_ev, direccion_ev, telf_contacto_ev) VALUES(:nombre_ev, :desc_ev, :img_ev, :edad_ev, :max_participantes_ev, :fecha_ev, :direccion_ev, :telf_contacto_ev)");
+    $stmt = $pdo->prepare("INSERT INTO tbl_eventos (nombre_ev, desc_ev, img_ev, edad_ev, capacidad_ev, fecha_ev, direccion_ev, telf_contacto_ev) VALUES(:nombre_ev, :desc_ev, :img_ev, :edad_ev, :capacidad_ev, :fecha_ev, :direccion_ev, :telf_contacto_ev)");
     $stmt->bindParam(':nombre_ev', $nombre_ev);
     $stmt->bindParam(':desc_ev', $desc_ev);
     $stmt->bindParam(':img_ev', $img_ev);

@@ -11,4 +11,4 @@ $stmt = $pdo->prepare("DELETE FROM tbl_eventos WHERE id_ev=?");
 $stmt->bindParam(1, $id_ev);
 $stmt->execute();
 
-header("Location:../view/formulario_crear.php");
+header("Location:../view/vista_admin.php");
