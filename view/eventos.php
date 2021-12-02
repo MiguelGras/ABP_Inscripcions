@@ -87,12 +87,28 @@ if(isset($_POST['Enviar'])){
     if (empty($listaEmails)) {
         if(move_uploaded_file($_FILES['file']['tmp_name'],$img_ev)){    
             try{
-                $insert=$pdo->prepare("INSERT INTO tbl_usuarios(dni_usu, nombre_usu, apellido_usu, edad_usu, email_usu, img_dni_usu) VALUES ('{$dni}','{$nombre}','{$apellido}','{$edad}','{$email}','{$img_ev}');");
-                $insert->execute();
-                if (empty($insert)) {
+                //empezar transaccion
+                $insertUsu=$pdo->prepare("INSERT INTO tbl_usuarios(dni_usu, nombre_usu, apellido_usu, edad_usu, email_usu, img_dni_usu) VALUES ('{$dni}','{$nombre}','{$apellido}','{$edad}','{$email}','{$img_ev}');");
+                $insertUsu->execute();
+                //print_r($insertUsu);
+                //------------
+                $selectEv=$pdo->prepare("SELECT nombre_ev FROM tbl_eventos WHERE id_ev={$id_ev}");
+                $selectEv->execute();
+                $selectEv=$selectEv->fetchAll(PDO::FETCH_ASSOC);
+                //------------
+                foreach ($selectEv as $nomevento) {
+                    $selectEv=$nomevento['nombre_ev'];
+                }
+                //------------
+                $insertVol=$pdo->prepare("INSERT INTO tbl_voluntarios(dni_par,evento_par) VALUES ('{$dni}','{$selectEv}');");
+                $insertVol->execute();
+                //print_r($insertVol);
+                //------------
+                if (empty($insertUsu && empty($insertVol))) {
+                    //Mirar porque hace los INSERTS pero salta mal
                     echo 'mal';
                 }else{
-                    //header("location:../view/eventos.php?id_ev={$_GET['id_ev']}");
+                    header("location:../view/eventos.php?id_ev={$_GET['id_ev']}");
                 }
             }catch(PDOException $e){
                 echo 'mal';
@@ -102,9 +118,7 @@ if(isset($_POST['Enviar'])){
     }else{
         echo '<h4>Ese email ya esta registrado</h4>';
     }
-    //------------
-    
+    //-----------
 }
-
 //------------
 ?>
