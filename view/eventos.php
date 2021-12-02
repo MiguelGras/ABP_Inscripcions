@@ -38,7 +38,7 @@ include '../services/connection.php';
 </head>
 <body>
     <h1>Rellena el formulario con tus datos para participar en la carrera!!</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
     <!--onsubmit="return false" -->
         <p>Nombre: <input type="text" name="nombre" id="nombre" placeholder="Introduce tu nombre..."></p>
         <br>
@@ -46,17 +46,17 @@ include '../services/connection.php';
         <br>
         <p>Edad: <input type="number" name="edad" id="edad" placeholder="Introduce tu edad..."></p>
         <br>
-        <p>Email: <input type="text" name="email" id="email" placeholder="Introduce tu mail..."></p>
+        <p>Email: <input type="email" name="email" id="email" placeholder="Introduce tu mail..."></p>
         <br>
-        <p>DNI: <input type="text" name="dni" id="dni" placeholder="Introduce tu DNI..."></p>
+        <p>DNI: <input type="text" minlength="9" maxlength="9" name="dni" id="dni" size="9" placeholder="Introduce tu DNI..."></p>
         <br>
-        <p>Foto DNI: <input class="form-control" type="file" accept="image/*" name="fotodni" id="fotodni" width="100%"></p>
+        <p>Foto DNI: <input class="form-control" type="file" accept="image/*" name="file" id="" width="100%"></p>
         <input type="submit" class="btn btn-success" value="Enviar" name="Enviar">
+        <input type="submit" class="btn btn-success" value="¿Has participado ya en algun evento?" name="partante">
     </form>
 </body>
 </html>
 <?php
-//$img_ev="../img/".date('j-m-y')."-".$_FILES['file'];
 //-----------------------------------------------------------------------------------------------
 if(isset($_POST['Enviar'])){
     //------------
@@ -65,21 +65,33 @@ if(isset($_POST['Enviar'])){
     $edad=$_POST['edad'];
     $email=$_POST['email'];
     $dni=$_POST['dni'];
-    //$fotodni=$_POST['fotodni'];
+    $img_ev="../img/dni/".date('j-m-y')."-".$_FILES['file']['name'];
     //------------
-        //$insert=$pdo->prepare("INSERT INTO `tbl_usuarios`(`dni_usu`, `nombre_usu`, `apellido_usu`, `edad_usu`, `email_usu`, `img_dni_usu`) VALUES ({$dni},{$nombre},{$apellido},{$edad},{$email},{$fotodni});");
-        $insert=$pdo->prepare("INSERT INTO tbl_usuarios (dni_usu, nombre_usu, apellido_usu, edad_usu, email_usu) VALUES ('{$dni}','{$nombre}','{$apellido}','{$edad}','{$email}');");
-        try{
-        $insert->execute();
-            if (empty($insert)) {
+    $compemail=$pdo->prepare("SELECT email_usu FROM tbl_usuarios WHERE email_usu='{$email}'");
+    $compemail->execute();
+    $listaEmails=$compemail->fetchAll(PDO::FETCH_ASSOC);
+    //------------
+    if (empty($listaEmails)) {
+        if(move_uploaded_file($_FILES['file']['tmp_name'],$img_ev)){    
+            try{
+                $insert=$pdo->prepare("INSERT INTO tbl_usuarios(dni_usu, nombre_usu, apellido_usu, edad_usu, email_usu, img_dni_usu) VALUES ('{$dni}','{$nombre}','{$apellido}','{$edad}','{$email}','{$img_ev}');");
+                $insert->execute();
+                if (empty($insert)) {
+                    echo 'mal';
+                }else{
+                    //header("location:../view/eventos.php?id_ev={$_GET['id_ev']}");
+                }
+            }catch(PDOException $e){
                 echo 'mal';
-            }else{
-                header("location:../view/eventos.php?id_ev={$_GET['id_ev']}");
+                echo  $e->GETMessage();
             }
-        }catch(PDOException $e){
-            echo 'mal';
-            echo  $e->GETMessage();
         }
+    }else{
+        echo 'Ese email ya esta registrado';
+    }
+    //------------
+    
 }
+
 //------------
 ?>
