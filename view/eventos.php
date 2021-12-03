@@ -14,6 +14,10 @@ include '../services/connection.php';
     $select->execute();
     $listaEventos=$select->fetchAll(PDO::FETCH_ASSOC);
 //------------
+    $contar=$pdo->prepare("SELECT evento_par FROM tbl_voluntarios WHERE id_ev={$id_ev}");
+    $contar->execute();
+    $count=$contar->rowCount(PDO::FETCH_ASSOC);
+//------------
         foreach ($listaEventos as $evento) {
             echo "<a href='vista.php'>Atras</a>";
             echo "<br>";
@@ -29,7 +33,7 @@ include '../services/connection.php';
                 echo "<br>";
                 echo "<div><b>Lugar de salida: </b>{$evento['direccion_ev']}</div>";  
                 echo "<br>";
-                echo "<div><b>Participantes: </b>x/{$evento['capacidad_ev']} participantes</div>";
+                echo "<div><b>Participantes: </b>$count/{$evento['capacidad_ev']} participantes</div>";
                 echo "<br>";
         }
 //-----------------------------------------------------------------------------------------------
@@ -84,10 +88,22 @@ if(isset($_POST['Enviar'])){
     $compremail->execute();
     $listaEmails=$compremail->fetchAll(PDO::FETCH_ASSOC);
     //------------
+    $comprusu=$pdo->prepare("SELECT dni_usu FROM tbl_usuarios WHERE dni_usu='{$dni}'");
+    $comprusu->execute();
+    $listaUsus=$comprusu->fetchAll(PDO::FETCH_ASSOC);
+    //------------
+    if (!empty($listaUsus)) {
+        echo "Este DNI ya ha sido registrado";
+        echo "<br>";
+    }else{
+        echo "Este DNI no esta registrado";
+        echo "<br>";
+    }
+    //------------
     if (empty($listaEmails)) {
         if(move_uploaded_file($_FILES['file']['tmp_name'],$img_ev)){    
             try{
-                //empezar transaccion
+                //$pdo->beginTransaction();
                 $insertUsu=$pdo->prepare("INSERT INTO tbl_usuarios(dni_usu, nombre_usu, apellido_usu, edad_usu, email_usu, img_dni_usu) VALUES ('{$dni}','{$nombre}','{$apellido}','{$edad}','{$email}','{$img_ev}');");
                 $insertUsu->execute();
                 //print_r($insertUsu);
@@ -100,17 +116,18 @@ if(isset($_POST['Enviar'])){
                     $selectEv=$nomevento['nombre_ev'];
                 }
                 //------------
-                $insertVol=$pdo->prepare("INSERT INTO tbl_voluntarios(dni_par,evento_par) VALUES ('{$dni}','{$selectEv}');");
+                $insertVol=$pdo->prepare("INSERT INTO tbl_voluntarios(dni_par, evento_par, id_ev) VALUES ('{$dni}','{$selectEv}',{$id_ev});");
                 $insertVol->execute();
                 //print_r($insertVol);
                 //------------
                 if (empty($insertUsu && empty($insertVol))) {
                     //Mirar porque hace los INSERTS pero salta mal
-                    echo 'mal';
                 }else{
                     header("location:../view/eventos.php?id_ev={$_GET['id_ev']}");
                 }
+                //$pdo->commit();
             }catch(PDOException $e){
+                //$pdo->rollBack();
                 echo 'mal';
                 echo  $e->GETMessage();
             }
