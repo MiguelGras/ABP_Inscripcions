@@ -25,13 +25,25 @@
     <div class="row">
         <?php
     include "../services/connection.php";
+    //include "../view";
 
     
         //------------
         $select=$pdo->prepare("SELECT * FROM tbl_eventos");
         $select->execute();
         $listaEventos=$select->fetchAll(PDO::FETCH_ASSOC);
+        /*foreach ($listaEventos as $capacidadev) {
+            $listaEv=$capacidadev['capacidad_ev'];
+            print_r($listaEv);
+            echo "<br>";
+        }*/
         //------------
+        /*$contar=$pdo->prepare("SELECT evento_par FROM tbl_voluntarios WHERE id_ev={$id_ev}");
+        $contar->execute();
+        $count=$contar->rowCount(PDO::FETCH_ASSOC);
+        print_r($count);*/
+        //------------
+
         foreach ($listaEventos as $evento) {
             echo "<box class='three-column'>";            
                 echo "<div>";
@@ -40,7 +52,7 @@
                 echo "<br>";
                 echo "<div><b>{$evento['nombre_ev']}</b></div>";  
                 echo "<br>";
-                echo "<div>x/{$evento['capacidad_ev']} participantes</div>";
+                echo "<div>Maximo de participantes: {$evento['capacidad_ev']}</div>";
                 echo "<br>";
                 echo "<div>{$evento['fecha_ev']}</div>";
             echo "</box>";
