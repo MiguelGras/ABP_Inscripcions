@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Formulario Modificar</title>
+    <link rel="stylesheet" type="text/css" href="../css/vista_admin.css">
 </head>
 
 <body>
+<center>
 <div class="">
-    <h1>Modificar Evento</h1>
+    <h1><b>Modificar Evento</b></h1>
+    <br>
+    <br>
     <?php
         $id_ev=$_REQUEST['id_ev'];
 
@@ -42,7 +46,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="desc_ev">Descripción evento:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="desc_ev" name="desc_ev" value="<?php echo "$evento[desc_ev]";?>">
+                <input type="text" class="form-control" id="desc_ev" name="desc_ev" style="padding: 30px 0px 30px 0px;" value="<?php echo "$evento[desc_ev]";?>">
             </div>
         </div>
 
@@ -92,11 +96,12 @@
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-info" name="guardar" >Guardar</button>
-                <a href='vista_admin.php' class='btn btn-danger'>Cancelar</a>
+                <button type="submit" class="button-1" name="guardar" >Guardar</button>
+                <a href='vista_admin.php' class='button-2'>Cancelar</a>
             </div>
         </div>
     </form>
     <?php } ?>
+</center>
 </body>
 </html>
