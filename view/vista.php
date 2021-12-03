@@ -10,9 +10,20 @@
     <script src="../js/vista.js"></script>
     <title>ABP_Inscripciones</title>
 </head>
+
+<header>
+        <h1>TodoInscripciones.com</h1>
+</header>
 <body>
-    <h1>Carreras para participar!</h1>
-    <?php
+    <div class="row">
+        <div class="admin">
+            <a>Acceso Administradores:</a>
+            <a href='login.html'><img src="../img/admin.png" width="50px" alt="admin"></a>
+            
+        </div>
+    </div>
+    <div class="row">
+        <?php
     include "../services/connection.php";
 
     
@@ -21,16 +32,37 @@
         $select->execute();
         $listaEventos=$select->fetchAll(PDO::FETCH_ASSOC);
         //------------
-        foreach ($listaEventos as $evento) {            
-            echo "<div>";
-                echo "<a href='eventos.php?id_ev={$evento['id_ev']}'><img style='width:200px;height:200px;' src='{$evento['img_ev']}'/></a>";
-            echo "</div>";
-            echo "<br>";
-            echo "<div>{$evento['nombre_ev']}</div>";  
-            echo "<br>";
-            echo "<div>x/{$evento['capacidad_ev']} participantes</div>";
-            echo "<br>";
-            echo "<div>{$evento['fecha_ev']}</div>";
+        foreach ($listaEventos as $evento) {
+            echo "<box class='three-column'>";            
+                echo "<div>";
+                    echo "<a href='eventos.php?id_ev={$evento['id_ev']}'><img style='width:200px;height:200px;' src='{$evento['img_ev']}'/></a>";
+                echo "</div>";
+                echo "<br>";
+                echo "<div><b>{$evento['nombre_ev']}</b></div>";  
+                echo "<br>";
+                echo "<div>x/{$evento['capacidad_ev']} participantes</div>";
+                echo "<br>";
+                echo "<div>{$evento['fecha_ev']}</div>";
+            echo "</box>";
         }
     ?>
+    </div>
+    
 </body>
+
+
+<div class="row" id="footer">
+        <div class="two-columnfoot">
+            <p>© TodoInscripciones.com</p>
+        </div>
+
+        <div class="four-column">
+            <p>Facebook</p>
+            <p>Instagram</p>
+        </div>
+
+        <div class="four-column">
+            <p>Discord</p>
+            <p>Twitter</p>
+        </div>
+</div>
