@@ -97,6 +97,7 @@
         }else{
             echo 'Ese email ya esta registrado';
         }
+
         //------------ 
     }
     //------------
@@ -122,7 +123,5 @@
             <p>Twitter</p>
         </div>
 </div>
-
-
 
 </html>
