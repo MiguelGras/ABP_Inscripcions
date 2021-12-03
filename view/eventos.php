@@ -35,7 +35,6 @@ include '../services/connection.php';
     $count=$contar->rowCount(PDO::FETCH_ASSOC);
 //------------
         foreach ($listaEventos as $evento) {
-            echo "<a href='vista.php'>Atras</a>";
             echo "<br>";
                 echo "<div>";
                     echo "<img style='width:200px;height:200px;' src='{$evento['img_ev']}'/>";
@@ -78,7 +77,7 @@ include '../services/connection.php';
                     echo "<h4>No se puede insciribr en este evento</h4>";
                 }else{
                     echo "<input type='submit' class='button-1' value='Enviar' name='Enviar'>";
-                    echo "<a href='../processes/partante.php?id_ev={$evento['id_ev']}'>¿Has participado ya en algun evento previo?</a>";
+                    echo "<a class='button-2' href='../processes/partante.php?id_ev={$evento['id_ev']}'>¿Has participado ya en algun evento previo?</a>";
                 }
             }       
         ?>
@@ -101,13 +100,6 @@ include '../services/connection.php';
         $comprusu->execute();
         $listaUsus=$comprusu->fetchAll(PDO::FETCH_ASSOC);
         //------------
-        if (!empty($listaUsus)) {
-            echo "Este DNI ya ha sido registrado";
-            echo "<br>";
-        }else{
-            echo "Este DNI no esta registrado";
-            echo "<br>";
-        }
         //------------
         if (empty($listaEmails)) {
             if(move_uploaded_file($_FILES['file']['tmp_name'],$img_ev)){    
@@ -125,7 +117,7 @@ include '../services/connection.php';
                         $selectEv=$nomevento['nombre_ev'];
                     }
                     //------------
-                    $insertVol=$pdo->prepare("INSERT INTO tbl_voluntarios(dni_par, evento_par, id_ev) VALUES ('{$dni}','{$selectEv}',{$id_ev});");
+                    $insertVol=$pdo->prepare("INSERT INTO tbl_voluntarios(id_par, dni_par, evento_par, id_ev) VALUES (NULL,'{$dni}','{$selectEv}',{$id_ev});");
                     $insertVol->execute();
                     //print_r($insertVol);
                     //------------

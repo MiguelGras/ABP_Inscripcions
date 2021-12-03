@@ -52,7 +52,7 @@
                 echo "<br>";
                 echo "<div><b>{$evento['nombre_ev']}</b></div>";  
                 echo "<br>";
-                echo "<div>Maximo de participantes: {$evento['capacidad_ev']}</div>";
+                echo "<div>Máximo de participantes: {$evento['capacidad_ev']}</div>";
                 echo "<br>";
                 echo "<div>{$evento['fecha_ev']}</div>";
             echo "</box>";
